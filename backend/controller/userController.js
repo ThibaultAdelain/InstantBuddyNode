@@ -2,17 +2,17 @@
 // Login
 // getMe
 
-const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
-const hash = require('hash.js')
 const asyncHandler = require('express-async-handler')
 const { User } = require('../models/userModel')
 const colors = require('colors')
 
 
 // Register a new user
+// @route /user/register
+// @access Public
 
-const post_register = asyncHandler ( async  (req, res) => {
+const register = asyncHandler ( async  (req, res) => {
 
     const { name, email, password } = req.body
 
@@ -36,10 +36,8 @@ const post_register = asyncHandler ( async  (req, res) => {
     // hashed using bcrypt, the algorithm is blowfish
 
     const salt = await bcrypt.genSalt(10)
-    console.log(colors.bgBlue(salt))
-    const hashedPassword = await hash.sha256().update(password + salt).digest('hex')
-    console.log(colors.bgBlue(hashedPassword))
-
+    const hashedPassword = await bcrypt.hash(password, salt)
+    
     // create user
     const user = await User.create({
         name: name,
@@ -51,7 +49,7 @@ const post_register = asyncHandler ( async  (req, res) => {
         res.status(201).json({
             _id: user.id,
             name: user.email,
-            email: user.email
+            email: user.email,
         })
     } else {
         res.status(400)
@@ -59,6 +57,45 @@ const post_register = asyncHandler ( async  (req, res) => {
     }
 })
 
+// login an user
+// @route user/login
+
+const login = asyncHandler( async (req, res) => {
+    const { email, password } = req.body
+
+    if (!email || !password) {
+        res.status(400)
+        throw new Error('Please add all fields')
+    }
+    
+    user = await User.findOne({
+        where: {
+            email: email
+        }
+    })
+
+    if (user && (await bcrypt.compare(password, user.password))) {
+        res.status(200).json({
+            _id: user.id,
+            name: user.name,
+            email: user.email,
+        })
+    } else {
+        throw new Error ('Invalid credentials')
+    }
+
+})
+
+// Get user data
+// @route user/me
+// @access Private
+
+const getMe = asyncHandler( async (req, res) => {
+    res.status(200).json({ message: 'User data display'})
+})
+
 module.exports = {
-    post_register
+    register,
+    login,
+    getMe
 }

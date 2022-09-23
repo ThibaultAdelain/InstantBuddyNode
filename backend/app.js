@@ -10,6 +10,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended:false }))
 
 app.use('/', require('./router/routes'))
+app.use('/user/', require('./router/userRoutes'))
 
 app.use(errorHandler)
 
