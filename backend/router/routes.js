@@ -3,7 +3,7 @@ const router = express.Router()
 const {
     get_register,
     post_register
-} = require('../controller/register')
+} = require('../controller/userController')
 const {
     get_profile,
     update_profile
@@ -24,7 +24,7 @@ router.get('/', (req, res) => {
     res.status(200).json({ message: 'Hello from index' })
 })
 
-router.route('/register').get(get_register).post(post_register)
+router.route('/register').post(post_register)
 
 router.route('/login').get(get_login).post(post_login)
 
