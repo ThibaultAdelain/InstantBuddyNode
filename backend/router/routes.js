@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const cookieParser = require('cookie-parser')
 const {
     get_chats
 } = require('../controller/chats')
@@ -9,7 +10,11 @@ const {
 
 
 router.get('/', (req, res) => {
-    res.status(200).json({ message: 'Hello from index' })
+    if (req.signedCookies.name) {
+        res.status(200).json({ message: `Hello ${req.signedCookies.name}` })
+    } else {
+        res.status(200).json({ message: 'Hello from index' })
+    }
 })
 
 router.route('/chats/:id').get(get_chats)

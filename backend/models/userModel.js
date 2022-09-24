@@ -19,6 +19,9 @@ const User = sequelize.define('user', {
     password: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    sessionID: {
+        type: DataTypes.INTEGER,
     }
 })
 

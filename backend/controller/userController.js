@@ -4,8 +4,13 @@
 
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
-const { User } = require('../models/userModel')
 const colors = require('colors')
+const cookieParser = require('cookie-parser')
+const dotenv = require('dotenv').config()
+const { User } = require('../models/userModel')
+const { generateUUID } = require('../middleware/authMiddleware')
+const { sequelize } = require('../config/db')
+
 
 
 // Register a new user
@@ -37,7 +42,7 @@ const register = asyncHandler ( async  (req, res) => {
 
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(password, salt)
-    
+
     // create user
     const user = await User.create({
         name: name,
@@ -75,6 +80,27 @@ const login = asyncHandler( async (req, res) => {
     })
 
     if (user && (await bcrypt.compare(password, user.password))) {
+        let flag = true
+        if (process.env.NODE_ENV === 'development') {
+            flag = false
+        }
+        res.cookie("name", user.name, {
+            secure: flag,
+            httpOnly: true,
+            sameSite: 'lax',
+            signed: true
+        })
+
+        // Set a sessionID cookie
+        const sessionID = generateUUID()
+        user.sessionID = sessionID
+        console.log(colors.bgCyan(user.sessionID))
+        res.cookie("sessionID", sessionID, {
+            secure: flag,
+            httpOnly: true,
+            sameSite: 'lax',
+            signed: true
+        })
         res.status(200).json({
             _id: user.id,
             name: user.name,
@@ -94,8 +120,23 @@ const getMe = asyncHandler( async (req, res) => {
     res.status(200).json({ message: 'User data display'})
 })
 
+const logout = asyncHandler( async (req, res) => {
+    //Objective: delete user.sessionID
+
+    // user = await User.findOne({
+    //     where: {
+    //         sessionID: req.signedCookies.sessionID
+    //     }
+    // })
+    //user.sessionID = 0
+    res.clearCookie("name")
+    res.clearCookie("sessionID")  
+    return res.redirect("/")
+})
+
 module.exports = {
     register,
     login,
-    getMe
+    getMe,
+    logout
 }
