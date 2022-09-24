@@ -53,7 +53,7 @@ const register = asyncHandler ( async  (req, res) => {
     if (user) {
         res.status(201).json({
             _id: user.id,
-            name: user.email,
+            name: user.name,
             email: user.email,
         })
     } else {
@@ -131,7 +131,7 @@ const logout = asyncHandler( async (req, res) => {
     //user.sessionID = 0
     res.clearCookie("name")
     res.clearCookie("sessionID")  
-    return res.redirect("/")
+    return res.redirect("/login")
 })
 
 module.exports = {
