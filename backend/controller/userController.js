@@ -10,6 +10,7 @@ const dotenv = require('dotenv').config()
 const { User } = require('../models/userModel')
 const { generateUUID } = require('../middleware/authMiddleware')
 const { sequelize } = require('../config/db')
+const { col } = require('sequelize')
 
 
 
@@ -91,10 +92,12 @@ const login = asyncHandler( async (req, res) => {
             signed: true
         })
 
-        // Set a sessionID cookie
+        // Set the attribute sessionID in the db
         const sessionID = generateUUID()
         user.sessionID = sessionID
-        console.log(colors.bgCyan(user.sessionID))
+        user.save()
+
+        // Set the cookies name and sessionID
         res.cookie("sessionID", sessionID, {
             secure: flag,
             httpOnly: true,
@@ -121,16 +124,15 @@ const getMe = asyncHandler( async (req, res) => {
 })
 
 const logout = asyncHandler( async (req, res) => {
-    //Objective: delete user.sessionID
-
-    // user = await User.findOne({
-    //     where: {
-    //         sessionID: req.signedCookies.sessionID
-    //     }
-    // })
-    //user.sessionID = 0
+    user = await User.findOne({
+        where: {
+            sessionID: req.signedCookies.sessionID
+        }
+    })
+    user.sessionID = null
+    user.save()
     res.clearCookie("name")
-    res.clearCookie("sessionID")  
+    res.clearCookie("sessionID")
     return res.redirect("/login")
 })
 
