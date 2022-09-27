@@ -1,6 +1,7 @@
 const cookieParser = require('cookie-parser')
 const asyncHandler = require('express-async-handler')
-const colors = require('colors')
+const colors = require('colors');
+const { User } = require('../models/userModel');
 
 // UUID is an universally unique identifier
 // it enables to give to every user an unique id
@@ -25,16 +26,32 @@ function generateUUID() { // Public Domain/MIT
 
 //NOT WORKING
 const protect = asyncHandler( async (req, res, next) => {
-    if (req.signedCookies.UUID === res.cookie.UUID) {
-        console.log(colors.bgGreen("ACCESS GRANTED"))
-        return true
+    const sessionID = req.signedCookies.sessionID
+    if (sessionID) {
+        try {
+            let user = await User.findOne({
+                where: {
+                    sessionID: sessionID
+                }
+            })
+            req.user = user
+            // We don't want people have the hashed password
+            req.user.password = null
+            next()
+        }
+        catch (err) {
+            console.log(err)
+            res.status(401)
+            throw new Error('Not authorized, invalid cookie')
+        }
     }
-    else {
-        console.log(colors.bgRed("ACCESS DENIED"))
+    if (!sessionID) {
+        res.status(401)
+        throw new Error('Not authorized, please login')
     }
-    next()
 })
 
 module.exports = {
     generateUUID,
+    protect
 }

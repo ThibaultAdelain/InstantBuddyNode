@@ -8,7 +8,7 @@ const colors = require('colors')
 const cookieParser = require('cookie-parser')
 const dotenv = require('dotenv').config()
 const { User } = require('../models/userModel')
-const { generateUUID } = require('../middleware/authMiddleware')
+const { generateUUID, protect } = require('../middleware/authMiddleware')
 const { sequelize } = require('../config/db')
 const { col } = require('sequelize')
 
@@ -74,12 +74,15 @@ const login = asyncHandler( async (req, res) => {
         throw new Error('Please add all fields')
     }
     
-    user = await User.findOne({
+    const user = await User.findOne({
         where: {
             email: email
         }
     })
 
+    // secure: true    means only https request is sent. During dev, your localhost will not read cookies sent
+    // HTTPonly: true   means the cookie is not accessible using the Js code in the browser (avoid cross-scripting attack)
+    // sameSite: 'lax'   means the cookie is only accessible through your website
     if (user && (await bcrypt.compare(password, user.password))) {
         let flag = true
         if (process.env.NODE_ENV === 'development') {
@@ -120,11 +123,15 @@ const login = asyncHandler( async (req, res) => {
 // @access Private
 
 const getMe = asyncHandler( async (req, res) => {
-    res.status(200).json({ message: 'User data display'})
+    res.status(200).json({
+        _id: req.user.id,
+        name: req.user.name,
+        email: req.user.email
+    })
 })
 
 const logout = asyncHandler( async (req, res) => {
-    user = await User.findOne({
+    const user = await User.findOne({
         where: {
             sessionID: req.signedCookies.sessionID
         }

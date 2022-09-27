@@ -6,6 +6,14 @@ const {
     getMe,
     logout
 } = require('../controller/userController')
+const {
+    get_chats
+} = require('../controller/chats')
+const {
+    get_map
+} = require('../controller/map')
+
+const { protect } = require('../middleware/authMiddleware')
 
 const {
     get_profile,
@@ -15,7 +23,9 @@ const {
 router.route('/register').post(register)
 router.route('/login').post(login)
 router.get('/logout', logout)
-router.get('/me', getMe)
-//router.route('/:id').get(get_profile).put(update_profile)
+router.get('/me', protect, getMe)
+router.get('/chats', protect, get_chats)
+router.get('/map', protect, get_map)
+
 
 module.exports = router
