@@ -88,25 +88,40 @@ const login = asyncHandler( async (req, res) => {
         if (process.env.NODE_ENV === 'development') {
             flag = false
         }
-        res.cookie("name", user.name, {
-            secure: flag,
-            httpOnly: true,
-            sameSite: 'lax',
-            signed: true
-        })
 
-        // Set the attribute sessionID in the db
+        // Set the attribute sessionID 
         const sessionID = generateUUID()
-        user.sessionID = sessionID
-        user.save()
 
-        // Set the cookies name and sessionID
-        res.cookie("sessionID", sessionID, {
+        // Set the cookies name, email and sessionID
+        res.cookie("name", user.name, {
+            expires: new Date(Date.now() + 900000),
             secure: flag,
             httpOnly: true,
             sameSite: 'lax',
             signed: true
         })
+        res.cookie("email", user.email, {
+            expires: new Date(Date.now() + 900000),
+            secure: flag,
+            httpOnly: true,
+            sameSite: 'lax',
+            signed: true
+        })
+        res.cookie("sessionID", sessionID, {
+            expires: new Date(Date.now() + 900000),
+            secure: flag,
+            httpOnly: true,
+            sameSite: 'lax',
+            signed: true
+        })
+
+        // Set sessionID of the user in the db
+        // We do not put salt because each sessionID are supposed to be different
+        const salt = await bcrypt.genSalt(10)
+        const hashedSessionID = await bcrypt.hash(sessionID, salt)
+        user.sessionID = hashedSessionID
+        user.save()
+        
         res.status(200).json({
             _id: user.id,
             name: user.name,
@@ -126,19 +141,20 @@ const getMe = asyncHandler( async (req, res) => {
     res.status(200).json({
         _id: req.user.id,
         name: req.user.name,
-        email: req.user.email
+        email: req.user.email,
     })
 })
 
 const logout = asyncHandler( async (req, res) => {
     const user = await User.findOne({
         where: {
-            sessionID: req.signedCookies.sessionID
+            email: req.signedCookies.email
         }
     })
     user.sessionID = null
     user.save()
     res.clearCookie("name")
+    res.clearCookie("email")
     res.clearCookie("sessionID")
     return res.redirect("/login")
 })

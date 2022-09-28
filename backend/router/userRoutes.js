@@ -22,7 +22,7 @@ const {
 
 router.route('/register').post(register)
 router.route('/login').post(login)
-router.get('/logout', logout)
+router.get('/logout', protect, logout)
 router.get('/me', protect, getMe)
 router.get('/chats', protect, get_chats)
 router.get('/map', protect, get_map)

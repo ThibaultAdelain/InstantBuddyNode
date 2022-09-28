@@ -1,6 +1,7 @@
 const cookieParser = require('cookie-parser')
 const asyncHandler = require('express-async-handler')
 const colors = require('colors');
+const bcrypt = require('bcryptjs')
 const { User } = require('../models/userModel');
 
 // UUID is an universally unique identifier
@@ -26,26 +27,27 @@ function generateUUID() { // Public Domain/MIT
 
 //NOT WORKING
 const protect = asyncHandler( async (req, res, next) => {
-    const sessionID = req.signedCookies.sessionID
-    if (sessionID) {
-        try {
-            let user = await User.findOne({
-                where: {
-                    sessionID: sessionID
-                }
-            })
+    const email = req.signedCookies.email
+    if (email) {
+        const user = await User.findOne({
+            where: {
+                email: req.signedCookies.email
+            }
+        })
+        if (await bcrypt.compare(req.signedCookies.sessionID, user.sessionID)) {
             req.user = user
+
             // We don't want people have the hashed password
             req.user.password = null
             next()
+        
+        } else {
+        res.status(401)
+        throw new Error('Not authorized, invalid cookie')
         }
-        catch (err) {
-            console.log(err)
-            res.status(401)
-            throw new Error('Not authorized, invalid cookie')
-        }
+        
     }
-    if (!sessionID) {
+    if (!email) {
         res.status(401)
         throw new Error('Not authorized, please login')
     }
