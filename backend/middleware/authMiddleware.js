@@ -25,7 +25,6 @@ function generateUUID() { // Public Domain/MIT
 }
 
 
-//NOT WORKING
 const protect = asyncHandler( async (req, res, next) => {
     const email = req.signedCookies.email
     if (email) {

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node backend/app.js",
     "server": "nodemon backend/app.js",
-    "client": "npm start --prefix frontend"
+    "client": "npm start --prefix frontend",
+    "dev" : "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Thibault Adelain",
   "license": "MIT",
@@ -24,6 +25,7 @@
     "sequelize": "^6.23.0"
   },
   "devDependencies": {
+    "concurrently": "^7.4.0",
     "nodemon": "^2.0.20"
   }
 }
