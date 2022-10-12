@@ -52,11 +52,51 @@ const register = asyncHandler ( async  (req, res) => {
     })
 
     if (user) {
+
+        let flag = true
+        if (process.env.NODE_ENV === 'development') {
+            flag = false
+        }
+
+        const sessionID = generateUUID()
+
+        res.cookie("name", user.name, {
+            expires: new Date(Date.now() + 900000),
+            secure: flag,
+            httpOnly: true,
+            sameSite: 'lax',
+            signed: true
+        })
+        res.cookie("email", user.email, {
+            expires: new Date(Date.now() + 900000),
+            secure: flag,
+            httpOnly: true,
+            sameSite: 'lax',
+            signed: true
+        })
+        res.cookie("sessionID", sessionID, {
+            expires: new Date(Date.now() + 900000),
+            secure: flag,
+            httpOnly: true,
+            sameSite: 'lax',
+            signed: true
+        })
+
+        const salt = await bcrypt.genSalt(10)
+        const hashedSessionID = await bcrypt.hash(sessionID, salt)
+        user.sessionID = hashedSessionID
+        user.save()
+
         res.status(201).json({
             _id: user.id,
             name: user.name,
             email: user.email,
+            sessionID: sessionID
         })
+
+        console.log(colors.bgMagenta('User successfully registered'))
+
+
     } else {
         res.status(400)
         throw new Error ('Invalid user data')
@@ -72,6 +112,11 @@ const login = asyncHandler( async (req, res) => {
     if (!email || !password) {
         res.status(400)
         throw new Error('Please add all fields')
+    }
+
+    if (req.signedCookies.email) {
+        res.status(400)
+        throw new Error('User already logged in')
     }
     
     const user = await User.findOne({
@@ -126,7 +171,11 @@ const login = asyncHandler( async (req, res) => {
             _id: user.id,
             name: user.name,
             email: user.email,
+            sessionID: sessionID
         })
+
+        console.log(colors.bgMagenta('User successfully logged in'))
+
     } else {
         throw new Error ('Invalid credentials')
     }
@@ -142,6 +191,7 @@ const getMe = asyncHandler( async (req, res) => {
         _id: req.user.id,
         name: req.user.name,
         email: req.user.email,
+        sessionID: req.signedCookies.sessionID
     })
 })
 
@@ -151,6 +201,7 @@ const logout = asyncHandler( async (req, res) => {
             email: req.signedCookies.email
         }
     })
+    console.log(colors.bgMagenta('User successfully logged out'))
     user.sessionID = null
     user.save()
     res.clearCookie("name")

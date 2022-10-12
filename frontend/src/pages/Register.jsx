@@ -30,6 +30,7 @@ function Register() {
 
         if (isSuccess || user) {
             navigate('/')
+            navigate(0)
         }
 
         dispatch(reset())
@@ -57,6 +58,7 @@ function Register() {
 
             dispatch(register(userData))
         }
+
     }
 
     if (isLoading) {
