@@ -3,7 +3,6 @@ import {useState, useEffect} from 'react'
 import { useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { FaUser } from 'react-icons/fa'
 import { register, reset } from '../features/auth/authSlice'
 import Spinner from '../Components/Spinner'
 
@@ -69,7 +68,7 @@ function Register() {
         <>
         <section className='heading'>
             <h1>
-                <FaUser /> Register
+                Register
             </h1>
             <p>Create an account</p>
         </section>
@@ -89,7 +88,11 @@ function Register() {
                     <input type="password" className='form-control' id='confirmPassword' name='confirmPassword' value={confirmPassword} placeholder='Confirm password' onChange={onChange}/>
                 </div>  
                 <div className="form-group">
-                    <button type="submit" className='btn btn-block'>Register</button>
+                    <button type="submit" className='relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800'>
+                        <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                            Register
+                        </span>
+                    </button>
                 </div>
             </form>
         </section>

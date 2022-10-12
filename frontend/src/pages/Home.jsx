@@ -1,14 +1,18 @@
 import React from 'react'
-import {GiFallingStar} from 'react-icons/gi'
+import Button from '../Components/Button'
 
 function Home() {
   return (
     <>
         <section className='heading'>
             <h1>
-                <GiFallingStar /> InstantBuddy
+                InstantBuddy
             </h1>
-            <p>Find your Buddy immediatly</p>
+            <p>Find a Buddy immediatly</p>
+            <div>
+            <Button />
+          </div>
+
         </section>
     </>
   )
