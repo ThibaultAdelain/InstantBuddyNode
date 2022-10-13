@@ -5,6 +5,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Profile from "./pages/Profile";
+import UpdateProfile from "./pages/UpdateProfile"
 import Header from "./Components/Header";
 
 function App() {
@@ -17,6 +19,8 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/profile/update' element={<UpdateProfile />} />
           </Routes>
         </div>
       </Router>

@@ -27,12 +27,20 @@ function Header() {
             </div>
         </div>
         <ul>
-            {user ? (                        
+            {user ? (
+                <>
+                    <li className='hoverGray'>
+                        <Link to='/profile'>
+                            <FaUser /> Profile
+                        </Link>
+                    </li>
                     <li className='hoverGray'>
                         <Link to='/' onClick={onLogout}>
                             <FaSignOutAlt /> Logout
                         </Link>
                     </li>
+                </>
+
                     ) : (
                     <>
                     <li className='hoverGray'>

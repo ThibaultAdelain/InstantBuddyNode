@@ -84,7 +84,7 @@ function Register() {
                     <input type="text" className='form-control' id='name' name='name' value={name} placeholder='Name' onChange={onChange}/>
                 </div>
                 <div className="form-group">
-                    <input type="text" className='form-control' id='email' name='email' value={email} placeholder='Email' onChange={onChange}/>
+                    <input type="email" className='form-control' id='email' name='email' value={email} placeholder='Email' onChange={onChange}/>
                 </div>  
                 <div className="form-group">
                     <input type="password" className='form-control' id='password' name='password' value={password} placeholder='Password' onChange={onChange}/>

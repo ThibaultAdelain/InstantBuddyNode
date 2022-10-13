@@ -61,21 +61,21 @@ const register = asyncHandler ( async  (req, res) => {
         const sessionID = generateUUID()
 
         res.cookie("name", user.name, {
-            expires: new Date(Date.now() + 900000),
+            //expires: new Date(Date.now() + 900000),
             secure: flag,
             httpOnly: true,
             sameSite: 'lax',
             signed: true
         })
         res.cookie("email", user.email, {
-            expires: new Date(Date.now() + 900000),
+            //expires: new Date(Date.now() + 900000),
             secure: flag,
             httpOnly: true,
             sameSite: 'lax',
             signed: true
         })
         res.cookie("sessionID", sessionID, {
-            expires: new Date(Date.now() + 900000),
+            //expires: new Date(Date.now() + 900000),
             secure: flag,
             httpOnly: true,
             sameSite: 'lax',
@@ -113,11 +113,6 @@ const login = asyncHandler( async (req, res) => {
         res.status(400)
         throw new Error('Please add all fields')
     }
-
-    if (req.signedCookies.email) {
-        res.status(400)
-        throw new Error('User already logged in')
-    }
     
     const user = await User.findOne({
         where: {
@@ -139,21 +134,21 @@ const login = asyncHandler( async (req, res) => {
 
         // Set the cookies name, email and sessionID
         res.cookie("name", user.name, {
-            expires: new Date(Date.now() + 900000),
+            //expires: new Date(Date.now() + 900000),
             secure: flag,
             httpOnly: true,
             sameSite: 'lax',
             signed: true
         })
         res.cookie("email", user.email, {
-            expires: new Date(Date.now() + 900000),
+            //expires: new Date(Date.now() + 900000),
             secure: flag,
             httpOnly: true,
             sameSite: 'lax',
             signed: true
         })
         res.cookie("sessionID", sessionID, {
-            expires: new Date(Date.now() + 900000),
+            //expires: new Date(Date.now() + 900000),
             secure: flag,
             httpOnly: true,
             sameSite: 'lax',
