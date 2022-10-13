@@ -21,13 +21,12 @@ function Home() {
                           </h1>
                             <h3>Find a Buddy immediatly</h3>
                       </section>
-                      <div className='homeText'>
-                          <p> Welcome {user.name}.</p>
-                          <p> See who is around you. Meet now.</p>
-                          <p>Easy. Fast. Free.</p> 
+                      <div className='homeText center'>
+                          <p> Welcome {user.name} !</p>
+                          <p> Is there a Buddy around you ?</p>
                         </div>
                         <section className='center marginButton' onClick={onClick}>
-                            <Button type='submit' text="Find a Buddy"/>
+                            <Button type='submit' text="Find your Buddy now !"/>
                         </section> 
                       </div>
                     ) : (
@@ -38,12 +37,12 @@ function Home() {
                           </h1>
                             <h3>Find a Buddy immediatly</h3>
                       </section>
-                      <div className='homeText'>
-                          <p>See who is around you. Meet now.</p>
-                          <p>Easy. Fast. Free.</p> 
+                      <div className='homeText center'>
+                          <p>Is there a Buddy around you ?</p>
+                          <p></p> 
                         </div>
                         <section className='center marginButton' onClick={onClick}>
-                            <Button type='submit' text="Find a Buddy"/>
+                            <Button type='submit' text="Find your Buddy now !"/>
                         </section> 
                       </div>
             )}
