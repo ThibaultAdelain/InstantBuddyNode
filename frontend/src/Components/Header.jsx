@@ -3,6 +3,7 @@ import {FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa'
 import {Link, useNavigate} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import {logout, reset} from '../features/auth/authSlice'
+import {GiFallingBlob} from 'react-icons/gi'
 
 function Header() {
     const navigate = useNavigate()
@@ -18,24 +19,28 @@ function Header() {
 
   return (
     <header className='header'>
-            <Link to='/'>
-                Home
-            </Link>
+        <div className="hoverGray">
+            <div className="text-3xl">
+                <Link to='/'>
+                    <GiFallingBlob />
+                </Link>
+            </div>
+        </div>
         <ul>
             {user ? (                        
-                    <li>
+                    <li className='hoverGray'>
                         <Link to='/' onClick={onLogout}>
                             <FaSignOutAlt /> Logout
                         </Link>
                     </li>
                     ) : (
                     <>
-                    <li>
+                    <li className='hoverGray'>
                         <Link to='/login'>
                             <FaSignInAlt /> Login
                         </Link>
                     </li>
-                    <li>
+                    <li className='hoverGray'>
                         <Link to='/Register'>
                             <FaUser /> Register
                         </Link>
