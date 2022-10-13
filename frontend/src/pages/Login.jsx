@@ -46,6 +46,10 @@ function Login() {
     const onSubmit = (e) => {
         e.preventDefault()
 
+        if (!email || !password){
+            toast.error('Please add all fields', {theme:'dark'})
+        }
+
         const userData = {
             email,
             password

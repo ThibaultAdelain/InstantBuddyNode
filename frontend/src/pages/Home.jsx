@@ -1,5 +1,10 @@
 import React from 'react'
 import Button from '../Components/Button'
+import { toast } from 'react-toastify'
+
+const onClick = () => {
+  toast.dark('Function coming')
+}
 
 function Home() {
   return (
@@ -14,8 +19,8 @@ function Home() {
             <p>See who is around you. Meet now.</p>
             <p>Easy. Fast. Free.</p> 
           </div>
-          <section className='center marginButton'>
-              <Button text="Find a Buddy"/>
+          <section className='center marginButton' onClick={onClick}>
+              <Button type='submit' text="Find a Buddy"/>
           </section> 
     </div>
   )

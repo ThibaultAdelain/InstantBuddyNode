@@ -25,7 +25,7 @@ function Register() {
     
     useEffect(() => {
         if (isError) {
-            toast.error(message)
+            toast.error(message, {theme:'dark'})
         }
 
         if (isSuccess || user) {
@@ -47,8 +47,12 @@ function Register() {
     const onSubmit = (e) => {
         e.preventDefault()
 
+        if (!name || !email || !password || !confirmPassword){
+            toast.error('Please add all fields', {theme:'dark'})
+        }
+        
         if (password !== confirmPassword) {
-            toast.error('Passwords do not match')
+            toast.error('Passwords do not match', {theme:'dark'})
         } else {
             const userData = {
                 name,
