@@ -23,6 +23,9 @@ const User = sequelize.define('user', {
     sessionID: {
         type: DataTypes.STRING,
         unique: true
+    },
+    description: {
+        type: DataTypes.TEXT,
     }
 })
 

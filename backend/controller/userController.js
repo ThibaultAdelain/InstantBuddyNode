@@ -94,7 +94,7 @@ const register = asyncHandler ( async  (req, res) => {
             sessionID: sessionID
         })
 
-        console.log(colors.bgMagenta('User successfully registered'))
+        console.log(colors.bgMagenta('User successfully registered and logged in'))
 
 
     } else {

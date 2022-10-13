@@ -54,7 +54,7 @@ function Profile() {
         <div className='containerBox textSpace'>
             <p>Name : {user.name}</p>
             <p>Email : {user.email}</p>
-            <p>Description : {user.name}</p>
+            <p>Description : empty</p>
         </div>
     <section className='form center'>
         <form onClick={onClick}>
