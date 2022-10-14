@@ -80,7 +80,7 @@ function Login() {
                     <input type="password" className='form-control' id='password' name='password' value={password} placeholder='Password' onChange={onChange}/>
                 </div>
                 <div className="form-group marginButton">
-                    <Button type="submit" text="login"/>
+                    <Button type="submit" text="Login"/>
                 </div>
             </form>
         </section>

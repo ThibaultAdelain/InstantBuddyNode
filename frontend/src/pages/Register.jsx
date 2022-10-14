@@ -93,7 +93,7 @@ function Register() {
                     <input type="password" className='form-control' id='confirmPassword' name='confirmPassword' value={confirmPassword} placeholder='Confirm password' onChange={onChange}/>
                 </div>  
                 <div className="form-group marginButton">
-                    <Button type="submit" text="register"/>
+                    <Button type="submit" text="Register"/>
                 </div>
             </form>
         </section>
