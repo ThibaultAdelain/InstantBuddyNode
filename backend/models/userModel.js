@@ -35,7 +35,7 @@ const User = sequelize.define('user', {
     }
 })
 
-sequelize.sync( { force: true }).then( () => {
+sequelize.sync( { alter: true }).then( () => {
     console.log(colors.green('User table accessed successfully !'))
 }).catch( (err) => {
     console.error(colors.red('Unable to access to the table : '), err)
