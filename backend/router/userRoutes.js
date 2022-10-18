@@ -4,7 +4,8 @@ const {
     login,
     register,
     getMe,
-    logout
+    logout,
+    postLocation
 } = require('../controller/userController')
 const {
     get_chats
@@ -26,6 +27,7 @@ router.get('/logout', protect, logout)
 router.get('/me', protect, getMe)
 router.get('/chats', protect, get_chats)
 router.get('/map', protect, get_map)
+router.post('/location', protect, postLocation)
 
 
 module.exports = router

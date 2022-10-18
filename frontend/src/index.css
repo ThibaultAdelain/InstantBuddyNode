@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #171515;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+}
+
+p {
+  line-height: 1.7;
+  color: #fff;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  line-height: 2.2;
+}
+
+h1
+{
+  font-weight: 600;
+  margin-bottom: 10px;
+  background: -webkit-linear-gradient(#ff764c, #e7b146);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h3
+{
+  font-weight: 400;
+  margin-bottom: 50px;
+  color: rgb(178, 178, 178);
+}
+
+
+.containerBody {
+  width: 60%;
+  margin: 0 auto;
+  padding: 0 20px;
+  border: 1px solid #f49149;
+  border-radius: 10px;
+}
+
+.containerBox {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  padding: 0 20px;
+}
+
+.textSpace p {
+  line-height: 50px;
+}
+
+.center {
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #f49149;
+  margin-bottom: 60px;
+  color: #fff;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.header ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header ul li {
+  margin-left: 20px;
+}
+
+.header ul li a {
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+
+.hoverGray a:hover {
+  color:  #f49149;
+  background: -webkit-linear-gradient(#ff764c, #e7b146);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header ul li a svg {
+  margin-right: 5px;
+}
+
+.homeContainer {
+  padding: 5%;
+}
+
+.heading {
+  font-size: 2rem;
+  margin-bottom: 50px;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.homeText p {
+  line-height: 3em;
+  font-size: 1.25em;
+}
+
+.marginButton {
+  margin-top: 3em;
+}
+
+.register,
+.login
+{
+  text-align: center;
+}
+
+.form,
+.content {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-family: inherit;
+}
+
+.form-group label {
+  text-align: left;
+  display: block;
+  margin: 0 0 5px 3px;
+}
+
+.loadingSpinnerContainer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 5000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadingSpinner {
+  width: 64px;
+  height: 64px;
+  border: 8px solid;
+  border-color: #000 transparent #555 transparent;
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 600px) {
+  .form {
+    width: 90%;
+  }
+
+  .heading h1 {
+    font-size: 2rem;
+  }
+
+  .heading p {
+    font-size: 1.5rem;
+  }
+}
+
+.myGold {
+  color: #EBB94C;
+}

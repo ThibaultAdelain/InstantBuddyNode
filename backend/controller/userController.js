@@ -52,11 +52,51 @@ const register = asyncHandler ( async  (req, res) => {
     })
 
     if (user) {
+
+        let flag = true
+        if (process.env.NODE_ENV === 'development') {
+            flag = false
+        }
+
+        const sessionID = generateUUID()
+
+        res.cookie("name", user.name, {
+            //expires: new Date(Date.now() + 900000),
+            secure: flag,
+            httpOnly: true,
+            sameSite: 'lax',
+            signed: true
+        })
+        res.cookie("email", user.email, {
+            //expires: new Date(Date.now() + 900000),
+            secure: flag,
+            httpOnly: true,
+            sameSite: 'lax',
+            signed: true
+        })
+        res.cookie("sessionID", sessionID, {
+            //expires: new Date(Date.now() + 900000),
+            secure: flag,
+            httpOnly: true,
+            sameSite: 'lax',
+            signed: true
+        })
+
+        const salt = await bcrypt.genSalt(10)
+        const hashedSessionID = await bcrypt.hash(sessionID, salt)
+        user.sessionID = hashedSessionID
+        user.save()
+
         res.status(201).json({
             _id: user.id,
             name: user.name,
             email: user.email,
+            sessionID: sessionID
         })
+
+        console.log(colors.bgMagenta('User successfully registered and logged in'))
+
+
     } else {
         res.status(400)
         throw new Error ('Invalid user data')
@@ -94,21 +134,21 @@ const login = asyncHandler( async (req, res) => {
 
         // Set the cookies name, email and sessionID
         res.cookie("name", user.name, {
-            expires: new Date(Date.now() + 900000),
+            //expires: new Date(Date.now() + 900000),
             secure: flag,
             httpOnly: true,
             sameSite: 'lax',
             signed: true
         })
         res.cookie("email", user.email, {
-            expires: new Date(Date.now() + 900000),
+            //expires: new Date(Date.now() + 900000),
             secure: flag,
             httpOnly: true,
             sameSite: 'lax',
             signed: true
         })
         res.cookie("sessionID", sessionID, {
-            expires: new Date(Date.now() + 900000),
+            //expires: new Date(Date.now() + 900000),
             secure: flag,
             httpOnly: true,
             sameSite: 'lax',
@@ -126,7 +166,11 @@ const login = asyncHandler( async (req, res) => {
             _id: user.id,
             name: user.name,
             email: user.email,
+            sessionID: sessionID
         })
+
+        console.log(colors.bgMagenta('User successfully logged in'))
+
     } else {
         throw new Error ('Invalid credentials')
     }
@@ -142,6 +186,7 @@ const getMe = asyncHandler( async (req, res) => {
         _id: req.user.id,
         name: req.user.name,
         email: req.user.email,
+        sessionID: req.signedCookies.sessionID
     })
 })
 
@@ -151,6 +196,7 @@ const logout = asyncHandler( async (req, res) => {
             email: req.signedCookies.email
         }
     })
+    console.log(colors.bgMagenta('User successfully logged out'))
     user.sessionID = null
     user.save()
     res.clearCookie("name")
@@ -159,9 +205,33 @@ const logout = asyncHandler( async (req, res) => {
     return res.redirect("/login")
 })
 
+const postLocation = asyncHandler( async (req, res) => {
+    const { longitude, latitude } = req.body
+
+    const user = await User.findOne({
+        where: {
+            email: req.signedCookies.email
+        }
+    })
+
+    user.longitude = longitude
+    user.latitude = latitude
+    user.save()
+
+    console.log(colors.bgMagenta('Location data successfully saved'))
+
+    res.status(200).json({
+        name: user.name,
+        email: user.email,
+        longitude: longitude,
+        latitude: latitude
+    })
+})
+
 module.exports = {
     register,
     login,
     getMe,
-    logout
+    logout,
+    postLocation
 }
