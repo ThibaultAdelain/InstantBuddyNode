@@ -12,7 +12,7 @@ function Home() {
   const {user} = useSelector((state) => state.auth)
 
   return (
-        <div>
+        <div className='container mx-auto'>
             {user ? (                        
                       <div className='homeContainer'>
                       <section className='heading'>

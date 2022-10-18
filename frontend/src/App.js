@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import UpdateProfile from "./pages/UpdateProfile"
 import Header from "./Components/Header";
+import Map from "./pages/Map";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path='/register' element={<Register />} />
             <Route path='/profile' element={<Profile />} />
             <Route path='/profile/update' element={<UpdateProfile />} />
+            <Route path='/map' element={<Map />} />
           </Routes>
         </div>
       </Router>
