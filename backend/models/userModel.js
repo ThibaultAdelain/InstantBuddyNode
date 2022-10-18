@@ -26,10 +26,16 @@ const User = sequelize.define('user', {
     },
     description: {
         type: DataTypes.TEXT,
+    },
+    longitude: {
+        type: DataTypes.FLOAT
+    },
+    latitude: {
+        type: DataTypes.FLOAT
     }
 })
 
-sequelize.sync( { alter: true }).then( () => {
+sequelize.sync( { force: true }).then( () => {
     console.log(colors.green('User table accessed successfully !'))
 }).catch( (err) => {
     console.error(colors.red('Unable to access to the table : '), err)

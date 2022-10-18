@@ -48,11 +48,11 @@ function Register() {
         e.preventDefault()
 
         if (!name || !email || !password || !confirmPassword){
-            toast.error('Please add all fields', {theme:'dark'})
+            toast.error('Please add all fields', {theme:'dark', position: 'bottom-right'})
         }
         
         if (password !== confirmPassword) {
-            toast.error('Passwords do not match', {theme:'dark'})
+            toast.error('Passwords do not match', {theme:'dark', position: 'bottom-right'})
         } else {
             const userData = {
                 name,

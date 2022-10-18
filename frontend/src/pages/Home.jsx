@@ -1,15 +1,23 @@
 import React from 'react'
 import Button from '../Components/Button'
-import { toast } from 'react-toastify'
 import {useSelector, useDispatch} from 'react-redux'
-
-const onClick = () => {
-  toast.dark('Function coming')
-}
+import { useNavigate} from 'react-router-dom'
 
 function Home() {
   const dispatch = useDispatch()
   const {user} = useSelector((state) => state.auth)
+  const navigate = useNavigate()
+
+
+  const onClickMap = (e) => {
+    e.preventDefault()
+    navigate('/map')
+  }
+
+  const onClickLogin = (e) => {
+    e.preventDefault()
+    navigate('/login')
+  }
 
   return (
         <div className='container mx-auto'>
@@ -25,7 +33,7 @@ function Home() {
                           <p> Welcome {user.name} !</p>
                           <p> Is there a Buddy around you ?</p>
                         </div>
-                        <section className='center marginButton' onClick={onClick}>
+                        <section className='center marginButton' onClick={onClickMap}>
                             <Button type='submit' text="Find your Buddy now !"/>
                         </section> 
                       </div>
@@ -41,7 +49,7 @@ function Home() {
                           <p>Is there a Buddy around you ?</p>
                           <p></p> 
                         </div>
-                        <section className='center marginButton' onClick={onClick}>
+                        <section className='center marginButton' onClick={onClickLogin}>
                             <Button type='submit' text="Find your Buddy now !"/>
                         </section> 
                       </div>

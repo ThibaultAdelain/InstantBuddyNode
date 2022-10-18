@@ -47,7 +47,10 @@ function Login() {
         e.preventDefault()
 
         if (!email || !password){
-            toast.error('Please add all fields', {theme:'dark'})
+            toast.error('Please add all fields', {
+                theme:'dark',
+                position: 'bottom-right'
+            })
         }
 
         const userData = {

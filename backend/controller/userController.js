@@ -205,9 +205,33 @@ const logout = asyncHandler( async (req, res) => {
     return res.redirect("/login")
 })
 
+const postLocation = asyncHandler( async (req, res) => {
+    const { longitude, latitude } = req.body
+
+    const user = await User.findOne({
+        where: {
+            email: req.signedCookies.email
+        }
+    })
+
+    user.longitude = longitude
+    user.latitude = latitude
+    user.save()
+
+    console.log(colors.bgMagenta('Location data successfully saved'))
+
+    res.status(200).json({
+        name: user.name,
+        email: user.email,
+        longitude: longitude,
+        latitude: latitude
+    })
+})
+
 module.exports = {
     register,
     login,
     getMe,
-    logout
+    logout,
+    postLocation
 }
