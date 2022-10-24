@@ -20,9 +20,9 @@ function Home() {
   }
 
   return (
-        <div className='container mx-auto'>
+        <div className='container mx-auto homeContainer'>
             {user ? (                        
-                      <div className='homeContainer'>
+                      <div>
                       <section className='heading'>
                           <h1>
                               Instant Buddy
@@ -38,7 +38,7 @@ function Home() {
                         </section> 
                       </div>
                     ) : (
-                      <div className='homeContainer'>
+                      <div>
                       <section className='heading'>
                           <h1>
                               Instant Buddy

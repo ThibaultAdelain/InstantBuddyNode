@@ -44,7 +44,7 @@ function Profile() {
     <div>
         {user ? (
             <>
-                <section className='heading'>
+                <section className='heading containerProfile'>
                     <h1>
                         Profile
                     </h1>

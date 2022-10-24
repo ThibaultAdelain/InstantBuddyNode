@@ -172,6 +172,7 @@ const login = asyncHandler( async (req, res) => {
         console.log(colors.bgMagenta('User successfully logged in'))
 
     } else {
+        res.status(401)
         throw new Error ('Invalid credentials')
     }
 

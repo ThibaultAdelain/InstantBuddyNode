@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import UpdateProfile from "./pages/UpdateProfile"
 import Header from "./Components/Header";
+import Footer from "./Components/Footer";
 import Map from "./pages/Map";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path='/map' element={<Map />} />
           </Routes>
         </div>
+        <Footer />
       </Router>
       <ToastContainer />
     </>
