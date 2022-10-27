@@ -14,8 +14,16 @@ const sendLocation = async () => {
     });
 }
 
+const getLocation = async () => {
+    
+    const response = await axios.get('/user/buddyFinder')
+    console.log(response.data)
+    return response.data
+}
+
 const locationFunctions = {
-    sendLocation
+    sendLocation,
+    getLocation
 }
 
 export default locationFunctions

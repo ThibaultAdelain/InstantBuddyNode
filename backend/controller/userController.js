@@ -5,12 +5,8 @@
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 const colors = require('colors')
-const cookieParser = require('cookie-parser')
-const dotenv = require('dotenv').config()
 const { User } = require('../models/userModel')
-const { generateUUID, protect } = require('../middleware/authMiddleware')
-const { sequelize } = require('../config/db')
-const { col } = require('sequelize')
+const { generateUUID } = require('../middleware/authMiddleware')
 
 
 
@@ -206,33 +202,9 @@ const logout = asyncHandler( async (req, res) => {
     return res.redirect("/login")
 })
 
-const postLocation = asyncHandler( async (req, res) => {
-    const { longitude, latitude } = req.body
-
-    const user = await User.findOne({
-        where: {
-            email: req.signedCookies.email
-        }
-    })
-
-    user.longitude = longitude
-    user.latitude = latitude
-    user.save()
-
-    console.log(colors.bgMagenta('Location data successfully saved'))
-
-    res.status(200).json({
-        name: user.name,
-        email: user.email,
-        longitude: longitude,
-        latitude: latitude
-    })
-})
-
 module.exports = {
     register,
     login,
     getMe,
-    logout,
-    postLocation
+    logout
 }

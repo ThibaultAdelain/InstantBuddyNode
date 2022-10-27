@@ -1,19 +1,14 @@
 import React from 'react'
-import {toast} from 'react-toastify'
 import locationFunctions from '../features/loc/location'
 
 function Map() {
 
     locationFunctions.sendLocation()
-
-    toast.error('Buddy not Found 😮', {
-      theme: 'dark',
-      position: 'bottom-right'
-  })
+    const buddies = locationFunctions.getLocation()
 
   return (
     <div>
-      <div className='text-white'>Coming soon...</div>
+      <div className='text-white'>Watch the console and send an email...</div>
     </div>
   )
 }
