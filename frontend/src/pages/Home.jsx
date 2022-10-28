@@ -11,7 +11,7 @@ function Home() {
 
   const onClickMap = (e) => {
     e.preventDefault()
-    navigate('/map')
+    navigate('location/map')
   }
 
   const onClickLogin = (e) => {

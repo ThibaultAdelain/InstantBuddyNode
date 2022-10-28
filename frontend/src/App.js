@@ -24,7 +24,7 @@ function App() {
             <Route path='/register' element={<Register />} />
             <Route path='/profile' element={<Profile />} />
             <Route path='/profile/update' element={<UpdateProfile />} />
-            <Route path='/map' element={<Map />} />
+            <Route path='location/map' element={<Map />} />
             <Route path='/about' element={<About />} />
           </Routes>
         </div>
