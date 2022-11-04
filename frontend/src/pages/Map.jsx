@@ -16,8 +16,6 @@ function Map() {
 
   const { buddies, isLoading, isError, isSuccess, message } = useSelector((state) => state.location)
 
-  var listBuddies = []
-
   useEffect(() => {
 
     if (isError) {
@@ -31,6 +29,7 @@ function Map() {
           
           buddies.buddies[0].forEach(user => {
             console.log(user.email)
+            console.log(user.updatedAt)
             return user.email
           })
 
@@ -38,14 +37,12 @@ function Map() {
             var mainContainer = document.getElementById("myBuddies");
             for (var i = 0; i < data.length; i++) {
               var li = document.createElement("li");
-              li.innerHTML = 'Email: ' + data[i].email;
+              li.innerHTML = 'Email: ' + data[i].email + ' ; See the ' + data[i].updatedAt.slice(0,10) + ' at ' + data[i].updatedAt.slice(11,16) + ' GMT.';
               mainContainer.appendChild(li);
             }
           }
 
           appendBuddies(buddies.buddies[0])
-
-          listBuddies = buddies.buddies[0].map((e) => <li key={e.email}>{e.email}</li>)
           
 
         } else {

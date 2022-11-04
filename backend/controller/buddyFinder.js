@@ -52,7 +52,7 @@ const buddyFinder = asyncHandler( async (req, res) => {
     })
     
     try {
-        const buddies = await sequelize.query("(SELECT email FROM users WHERE (longitude BETWEEN ? AND ?) AND (latitude BETWEEN ? AND ?) AND email != ?)", {
+        const buddies = await sequelize.query("(SELECT email, updatedAt FROM users WHERE (longitude BETWEEN ? AND ?) AND (latitude BETWEEN ? AND ?) AND email != ?)", {
             replacements: [user.longitude - 0.005, user.longitude + 0.005, user.latitude - 0.005, user.latitude + 0.005, user.email]
         })
 

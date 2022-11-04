@@ -15,15 +15,10 @@ const sendLocation = async () => {
 }
 
 const getBuddies = async () => {
-
-    localStorage.setItem("buddies", "null")
     
     const response = await axios.get('/user/buddyFinder')
 
-    if (response.data && !(JSON.stringify(response.data.stack))) {
-        localStorage.setItem("buddies", JSON.stringify(response.data))
-    }
-    console.log(response.data)
+    console.log(response.data.buddies)
     return response.data
 }
 
