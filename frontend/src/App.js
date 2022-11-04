@@ -8,7 +8,9 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import UpdateProfile from "./pages/UpdateProfile"
 import Header from "./Components/Header";
+import Footer from "./Components/Footer";
 import Map from "./pages/Map";
+import About from "./pages/About"
 
 function App() {
   return (
@@ -22,9 +24,11 @@ function App() {
             <Route path='/register' element={<Register />} />
             <Route path='/profile' element={<Profile />} />
             <Route path='/profile/update' element={<UpdateProfile />} />
-            <Route path='/map' element={<Map />} />
+            <Route path='location/map' element={<Map />} />
+            <Route path='/about' element={<About />} />
           </Routes>
         </div>
+        <Footer />
       </Router>
       <ToastContainer />
     </>

@@ -66,7 +66,7 @@ function Login() {
     }
 
     return(
-        <div className='login'>
+        <div className='login containerLogin'>
         <section className='heading'>
             <h1>
                 Login

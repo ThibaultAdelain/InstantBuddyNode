@@ -5,12 +5,9 @@
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 const colors = require('colors')
-const cookieParser = require('cookie-parser')
-const dotenv = require('dotenv').config()
 const { User } = require('../models/userModel')
-const { generateUUID, protect } = require('../middleware/authMiddleware')
-const { sequelize } = require('../config/db')
-const { col } = require('sequelize')
+const { generateUUID } = require('../middleware/authMiddleware')
+const { json } = require('body-parser')
 
 
 
@@ -95,7 +92,7 @@ const register = asyncHandler ( async  (req, res) => {
         })
 
         console.log(colors.bgMagenta('User successfully registered and logged in'))
-
+        res.status(200, "User successfully registered and logged in")
 
     } else {
         res.status(400)
@@ -170,8 +167,10 @@ const login = asyncHandler( async (req, res) => {
         })
 
         console.log(colors.bgMagenta('User successfully logged in'))
+        res.status(200, "User successfully logged in")
 
     } else {
+        res.status(401)
         throw new Error ('Invalid credentials')
     }
 
@@ -196,35 +195,57 @@ const logout = asyncHandler( async (req, res) => {
             email: req.signedCookies.email
         }
     })
-    console.log(colors.bgMagenta('User successfully logged out'))
     user.sessionID = null
     user.save()
     res.clearCookie("name")
     res.clearCookie("email")
     res.clearCookie("sessionID")
+    console.log(colors.bgMagenta('User successfully logged out'))
+    res.status(200, "User successfully logged out")
     return res.redirect("/login")
 })
 
-const postLocation = asyncHandler( async (req, res) => {
-    const { longitude, latitude } = req.body
-
+const updateProfile = asyncHandler( async (req, res) => {
     const user = await User.findOne({
         where: {
             email: req.signedCookies.email
         }
     })
-
-    user.longitude = longitude
-    user.latitude = latitude
+    const { name, email, description } = req.body
+    if (!name || !email || !description) {
+        res.status(400)
+        throw new Error('Please add all fields')
+    }
+    user.name = name
+    user.email = email
+    user.description = description
     user.save()
-
-    console.log(colors.bgMagenta('Location data successfully saved'))
-
+    res.clearCookie("name")
+    res.clearCookie("email")
+    let flag = true
+    if (process.env.NODE_ENV === 'development') {
+        flag = false
+    }
+    res.cookie("name", name, {
+        //expires: new Date(Date.now() + 900000),
+        secure: flag,
+        httpOnly: true,
+        sameSite: 'lax',
+        signed: true
+    })
+    res.cookie("email", email, {
+        //expires: new Date(Date.now() + 900000),
+        secure: flag,
+        httpOnly: true,
+        sameSite: 'lax',
+        signed: true
+    })
+    console.log(colors.bgMagenta('Profile successfully updated'))
     res.status(200).json({
+        _id: user.id,
         name: user.name,
         email: user.email,
-        longitude: longitude,
-        latitude: latitude
+        description: user.description,
     })
 })
 
@@ -233,5 +254,5 @@ module.exports = {
     login,
     getMe,
     logout,
-    postLocation
+    updateProfile
 }

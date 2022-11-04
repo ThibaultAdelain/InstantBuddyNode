@@ -70,7 +70,7 @@ function Register() {
     }
 
     return(
-        <div className='register'>
+        <div className='register containerRegister'>
         <section className='heading'>
             <h1>
                 Register
