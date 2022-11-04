@@ -16,6 +16,8 @@ function Map() {
 
   const { buddies, isLoading, isError, isSuccess, message } = useSelector((state) => state.location)
 
+  var listBuddies = []
+
   useEffect(() => {
 
     if (isError) {
@@ -25,21 +27,33 @@ function Map() {
     if (isSuccess) {
       try {
         if (buddies.buddies[0][0].email){
-          toast.success("Wouhou ! See the console →", {theme: "dark", position: "bottom-right"})
-
-          let buddyList = []
+          toast.success("Wouhou !", {theme: "dark", position: "bottom-right"})
+          
           buddies.buddies[0].forEach(user => {
-            buddyList.push(user.email)
             console.log(user.email)
             return user.email
           })
-        }
 
-        else {
+          function appendBuddies(data) {
+            var mainContainer = document.getElementById("myBuddies");
+            for (var i = 0; i < data.length; i++) {
+              var li = document.createElement("li");
+              li.innerHTML = 'Email: ' + data[i].email;
+              mainContainer.appendChild(li);
+            }
+          }
+
+          appendBuddies(buddies.buddies[0])
+
+          listBuddies = buddies.buddies[0].map((e) => <li key={e.email}>{e.email}</li>)
+          
+
+        } else {
           toast("Nobody around, keep looking...", {theme: "dark", position: "bottom-right", type:"info"})
         }
        
       } catch {
+        toast("Nobody around, keep looking...", {theme: "dark", position: "bottom-right", type:"info"})
         console.log("Please click again...")
         navigate("/location/map")
       }
@@ -60,13 +74,18 @@ function Map() {
     return <Spinner />
   }
 
-
-
+  document.getElementById('root')
   return (
     <div>
      <section className='center marginButton' onClick={onClick}>
          <Button type='submit' text="Find your Buddy now !"/>
      </section>
+     <div>
+      <div className='containerBox textSpace'>
+          <p>Make a contact, send an email !</p>
+          <ul id="myBuddies" className='text-white'></ul>
+       </div>
+     </div>
     </div>
   )
 }

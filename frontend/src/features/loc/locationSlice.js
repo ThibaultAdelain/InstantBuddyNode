@@ -1,8 +1,10 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import locationFunctions from './location'
 
+const buddies = JSON.parse(localStorage.getItem('buddies'))
+
 const initialState = {
-    buddies: [],
+    buddies: buddies,
     isError: false,
     isSuccess: false,
     isLoading: false,

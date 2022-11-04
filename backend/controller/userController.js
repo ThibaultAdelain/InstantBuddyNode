@@ -7,6 +7,7 @@ const asyncHandler = require('express-async-handler')
 const colors = require('colors')
 const { User } = require('../models/userModel')
 const { generateUUID } = require('../middleware/authMiddleware')
+const { json } = require('body-parser')
 
 
 
@@ -91,7 +92,7 @@ const register = asyncHandler ( async  (req, res) => {
         })
 
         console.log(colors.bgMagenta('User successfully registered and logged in'))
-
+        res.status(200, "User successfully registered and logged in")
 
     } else {
         res.status(400)
@@ -166,6 +167,7 @@ const login = asyncHandler( async (req, res) => {
         })
 
         console.log(colors.bgMagenta('User successfully logged in'))
+        res.status(200, "User successfully logged in")
 
     } else {
         res.status(401)
@@ -193,18 +195,64 @@ const logout = asyncHandler( async (req, res) => {
             email: req.signedCookies.email
         }
     })
-    console.log(colors.bgMagenta('User successfully logged out'))
     user.sessionID = null
     user.save()
     res.clearCookie("name")
     res.clearCookie("email")
     res.clearCookie("sessionID")
+    console.log(colors.bgMagenta('User successfully logged out'))
+    res.status(200, "User successfully logged out")
     return res.redirect("/login")
+})
+
+const updateProfile = asyncHandler( async (req, res) => {
+    const user = await User.findOne({
+        where: {
+            email: req.signedCookies.email
+        }
+    })
+    const { name, email, description } = req.body
+    if (!name || !email || !description) {
+        res.status(400)
+        throw new Error('Please add all fields')
+    }
+    user.name = name
+    user.email = email
+    user.description = description
+    user.save()
+    res.clearCookie("name")
+    res.clearCookie("email")
+    let flag = true
+    if (process.env.NODE_ENV === 'development') {
+        flag = false
+    }
+    res.cookie("name", name, {
+        //expires: new Date(Date.now() + 900000),
+        secure: flag,
+        httpOnly: true,
+        sameSite: 'lax',
+        signed: true
+    })
+    res.cookie("email", email, {
+        //expires: new Date(Date.now() + 900000),
+        secure: flag,
+        httpOnly: true,
+        sameSite: 'lax',
+        signed: true
+    })
+    console.log(colors.bgMagenta('Profile successfully updated'))
+    res.status(200).json({
+        _id: user.id,
+        name: user.name,
+        email: user.email,
+        description: user.description,
+    })
 })
 
 module.exports = {
     register,
     login,
     getMe,
-    logout
+    logout,
+    updateProfile
 }

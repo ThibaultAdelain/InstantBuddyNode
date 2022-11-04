@@ -1,5 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import authService from './authService'
+import updateService from './updateService'
 
 //Get user from localStorage
 const user = JSON.parse(localStorage.getItem('user'))
@@ -36,6 +37,16 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
 // Logout user
 export const logout = createAsyncThunk('auth/logout', async () => {
     await authService.logout()
+})
+
+// Update Profile user
+export const updateProfile = createAsyncThunk('auth/updateProfile', async (user, thunkAPI) => {
+    try {
+        return await updateService.updateProfile(user)
+    } catch (error) {
+        const message = (error.message && error.response.data && error.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
 })
  
 export const authSlice = createSlice({
@@ -90,6 +101,22 @@ export const authSlice = createSlice({
         } )
         .addCase(logout.rejected, (state) => {
             state.user = null
+        } )
+        .addCase(updateProfile.pending, (state) => {
+            state.isLoading = true
+        } )
+        .addCase(updateProfile.fulfilled, (state, action) => {
+            state.isSuccess = true
+            state.isLoading = false
+            state.user = action.payload
+            // action.payload => user sent back by the server
+        } )
+        .addCase(updateProfile.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
+            state.user = null
+            // action.payload => thunkAPI.rejectWithValue(message)
         } )
     }
 })

@@ -5,13 +5,11 @@ const {
     register,
     getMe,
     logout,
+    updateProfile
 } = require('../controller/userController')
 const {
     get_chats
 } = require('../controller/chats')
-const {
-    get_map
-} = require('../controller/map')
 const {
     postLocation,
     buddyFinder
@@ -24,10 +22,9 @@ router.route('/login').post(login)
 router.get('/logout', protect, logout)
 router.get('/me', protect, getMe)
 router.get('/chats', protect, get_chats)
-router.get('/map', protect, get_map)
 router.get('/buddyFinder', protect, buddyFinder)
 router.post('/location', protect, postLocation)
-
+router.put('/updateProfile', protect, updateProfile)
 
 
 module.exports = router

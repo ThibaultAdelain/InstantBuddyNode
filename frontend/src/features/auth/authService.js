@@ -34,6 +34,7 @@ const login = async (userData) => {
 const logout = async () => {
     await axios.get(API_URL + 'logout')
     localStorage.removeItem('user')
+    localStorage.removeItem('buddies')
 }
 
 const authService = {
