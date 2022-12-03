@@ -50,7 +50,7 @@ function Map() {
         }
        
       } catch {
-        toast("Nobody around, keep looking...", {theme: "dark", position: "bottom-right", type:"info"})
+        toast("Error, please click again...", {theme: "dark", position: "bottom-right", type:"info"})
         console.log("Please click again...")
         navigate("/location/map")
       }

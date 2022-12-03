@@ -219,6 +219,10 @@ h3
   animation: spin 1.2s linear infinite;
 }
 
+.myGold {
+  color: #EBB94C;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -240,8 +244,24 @@ h3
   .heading p {
     font-size: 1.5rem;
   }
+
+
 }
 
-.myGold {
-  color: #EBB94C;
+@media (max-width: 900px) {
+  .responsiveHide {
+    display: none;
+  }
+  #about {
+    padding: 1em;
+  }
+  #licensing {
+    padding: 1em;
+  }
+  #contact {
+    padding: 1em;
+  }
 }
+
+
+

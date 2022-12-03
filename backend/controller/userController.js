@@ -23,6 +23,13 @@ const register = asyncHandler ( async  (req, res) => {
         res.status(400)
         throw new Error('Please add all fields')
     }
+    
+    var filterEmail = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i);
+
+    if (!filterEmail.test(email)) {
+        res.status(400)
+        throw new Error('Email incorrect')
+    }
 
     // Check if user exists
 
@@ -58,21 +65,21 @@ const register = asyncHandler ( async  (req, res) => {
         const sessionID = generateUUID()
 
         res.cookie("name", user.name, {
-            //expires: new Date(Date.now() + 900000),
+            expires: new Date(Date.now() + 900000),
             secure: flag,
             httpOnly: true,
             sameSite: 'lax',
             signed: true
         })
         res.cookie("email", user.email, {
-            //expires: new Date(Date.now() + 900000),
+            expires: new Date(Date.now() + 900000),
             secure: flag,
             httpOnly: true,
             sameSite: 'lax',
             signed: true
         })
         res.cookie("sessionID", sessionID, {
-            //expires: new Date(Date.now() + 900000),
+            expires: new Date(Date.now() + 900000),
             secure: flag,
             httpOnly: true,
             sameSite: 'lax',
@@ -131,21 +138,21 @@ const login = asyncHandler( async (req, res) => {
 
         // Set the cookies name, email and sessionID
         res.cookie("name", user.name, {
-            //expires: new Date(Date.now() + 900000),
+            expires: new Date(Date.now() + 900000),
             secure: flag,
             httpOnly: true,
             sameSite: 'lax',
             signed: true
         })
         res.cookie("email", user.email, {
-            //expires: new Date(Date.now() + 900000),
+            expires: new Date(Date.now() + 900000),
             secure: flag,
             httpOnly: true,
             sameSite: 'lax',
             signed: true
         })
         res.cookie("sessionID", sessionID, {
-            //expires: new Date(Date.now() + 900000),
+            expires: new Date(Date.now() + 900000),
             secure: flag,
             httpOnly: true,
             sameSite: 'lax',
@@ -227,14 +234,14 @@ const updateProfile = asyncHandler( async (req, res) => {
         flag = false
     }
     res.cookie("name", name, {
-        //expires: new Date(Date.now() + 900000),
+        expires: new Date(Date.now() + 900000),
         secure: flag,
         httpOnly: true,
         sameSite: 'lax',
         signed: true
     })
     res.cookie("email", email, {
-        //expires: new Date(Date.now() + 900000),
+        expires: new Date(Date.now() + 900000),
         secure: flag,
         httpOnly: true,
         sameSite: 'lax',
