@@ -192,7 +192,8 @@ const getMe = asyncHandler( async (req, res) => {
         _id: req.user.id,
         name: req.user.name,
         email: req.user.email,
-        sessionID: req.signedCookies.sessionID
+        sessionID: req.signedCookies.sessionID,
+        description: req.user.description
     })
 })
 

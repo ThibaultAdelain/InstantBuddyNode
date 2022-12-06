@@ -50,7 +50,7 @@ function Map() {
         }
        
       } catch {
-        toast("Error, please click again...", {theme: "dark", position: "bottom-right", type:"info"})
+        toast("Nobody around, keep looking...", {theme: "dark", position: "bottom-right", type:"info"})
         console.log("Please click again...")
         navigate("/location/map")
       }
@@ -79,7 +79,7 @@ function Map() {
      </section>
      <div>
       <div className='containerBox textSpace'>
-          <p>Make a contact, send an email !</p>
+          <p>Make a contact, send a message !</p>
           <ul id="myBuddies" className='text-white'></ul>
        </div>
      </div>

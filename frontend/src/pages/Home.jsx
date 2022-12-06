@@ -2,12 +2,29 @@ import React from 'react'
 import Button from '../Components/Button'
 import {useSelector, useDispatch} from 'react-redux'
 import { useNavigate} from 'react-router-dom'
+import { getMe, reset } from '../features/auth/authSlice'
+import axios from 'axios'
 
 function Home() {
-  const dispatch = useDispatch()
-  const {user} = useSelector((state) => state.auth)
-  const navigate = useNavigate()
 
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const {user} = useSelector((state) => state.auth)
+
+  // getMe
+
+  const API_URL = '/user/'
+
+  const getMe = async () => {
+    const response = await axios.get(API_URL + 'me')
+
+    if (response.data) {
+        localStorage.setItem('user', JSON.stringify(response.data))
+    }
+  }
+
+  getMe()
 
   const onClickMap = (e) => {
     e.preventDefault()

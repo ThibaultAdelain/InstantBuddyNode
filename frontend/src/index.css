@@ -160,8 +160,16 @@ h3
   font-size: 1.25em;
 }
 
-.marginButton {
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
   margin-top: 3em;
+}
+
+.marginButton {
+  margin-top: 2em;
 }
 
 .register,

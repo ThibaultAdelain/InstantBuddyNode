@@ -5,9 +5,7 @@ import axios from 'axios'
 
 const API_URL = '/user/'
 
-// Register user 
-// post the form to the server
-// pick up the response (mainly session cookie), and save it to local storage
+// Update profile
 
 const updateProfile = async (userData) => {
     const response = await axios.put(API_URL + 'updateProfile', userData)
@@ -20,7 +18,7 @@ const updateProfile = async (userData) => {
 }
 
 const updateService = {
-    updateProfile
+    updateProfile,
 }
 
 

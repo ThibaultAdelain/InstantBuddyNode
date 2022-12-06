@@ -82,8 +82,15 @@ function Login() {
                 <div className="form-group">
                     <input type="password" className='form-control' id='password' name='password' value={password} placeholder='Password' onChange={onChange}/>
                 </div>
-                <div className="form-group marginButton">
-                    <Button type="submit" text="Login"/>
+                <div className='wrapper'>
+                    <div className="form-group">
+                        <Button type="submit" text="Login"/>
+                    </div>
+                    <form action="http://localhost:5000/auth/google">
+                        <div className="form-group">
+                            <Button text="Login with google"/>
+                        </div>
+                    </form>
                 </div>
             </form>
         </section>

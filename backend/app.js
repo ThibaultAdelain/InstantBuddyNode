@@ -5,6 +5,11 @@ const {errorHandler} = require('./middleware/errorMiddleware')
 const cookieParser = require('cookie-parser')
 const helmet = require('helmet')
 const colors = require('colors')
+const passport = require('passport')
+
+
+// Passport config
+require('./config/passport')(passport)
 
 app = express()
 
@@ -18,8 +23,14 @@ app.use(cookieParser('SECRET_KEY_COOKIES'))
 // Help to secure HTTP header
 app.use(helmet())
 
+// Passport middleware
+app.use(passport.initialize())
+
+
 app.use('/', require('./router/routes'))
 app.use('/user/', require('./router/userRoutes'))
+app.use('/auth/', require('./router/googleAuth'))
+
 
 app.use(errorHandler)
 

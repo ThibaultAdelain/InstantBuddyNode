@@ -33,7 +33,7 @@ const protect = asyncHandler( async (req, res, next) => {
                 email: req.signedCookies.email
             }
         })
-        if (await bcrypt.compare(req.signedCookies.sessionID, user.sessionID)) {
+        if (((await bcrypt.compare(req.signedCookies.sessionID, user.sessionID)) || req.signedCookies.sessionID === user.sessionID)) {
             req.user = user
 
             // We don't want people have the hashed password

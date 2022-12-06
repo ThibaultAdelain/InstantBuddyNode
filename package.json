@@ -7,7 +7,7 @@
     "start": "node backend/app.js",
     "server": "nodemon backend/app.js",
     "client": "npm start --prefix frontend",
-    "dev" : "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Thibault Adelain",
   "license": "MIT",
@@ -22,6 +22,8 @@
     "express-handlebars": "^6.0.6",
     "helmet": "^6.0.0",
     "mysql2": "^2.3.3",
+    "passport": "^0.6.0",
+    "passport-google-oauth20": "^2.0.0",
     "sequelize": "^6.23.0"
   },
   "devDependencies": {

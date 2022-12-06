@@ -1,7 +1,7 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
 import { useSelector, useDispatch} from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { redirect, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { register, reset } from '../features/auth/authSlice'
 import Spinner from '../Components/Spinner'
@@ -92,9 +92,18 @@ function Register() {
                 <div className="form-group">
                     <input type="password" className='form-control' id='confirmPassword' name='confirmPassword' value={confirmPassword} placeholder='Confirm password' onChange={onChange}/>
                 </div>  
-                <div className="form-group marginButton">
-                    <Button type="submit" text="Register"/>
+
+                <div className='wrapper'>
+                    <div className="form-group">
+                        <Button type="submit" text="Register"/>
+                    </div>
+                    <form action="http://localhost:5000/auth/google">
+                        <div className="form-group">
+                            <Button text="Register with google"/>
+                        </div>
+                    </form>
                 </div>
+
             </form>
         </section>
         </div>
