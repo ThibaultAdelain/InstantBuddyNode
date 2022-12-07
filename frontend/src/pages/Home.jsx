@@ -24,7 +24,35 @@ function Home() {
     }
   }
 
-  getMe()
+  if(!user) {
+    getMe()
+  }
+
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async function reloadAfterLogin() {
+    await sleep(100)
+    if ((localStorage.getItem('user')) && (!localStorage.getItem('hasRefreshed'))) {
+      localStorage.setItem('hasRefreshed', true)
+      window.location.reload()
+    }
+  }
+
+  reloadAfterLogin()
+
+  async function reloadAfterLogout() {
+    await sleep(100)
+    if (localStorage.getItem('reloadAfterLogout')) {
+      localStorage.removeItem('reloadAfterLogout')
+      window.location.reload()
+    }
+  }
+
+  reloadAfterLogout()
+
+
 
   const onClickMap = (e) => {
     e.preventDefault()

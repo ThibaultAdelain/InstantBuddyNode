@@ -33,7 +33,9 @@ const login = async (userData) => {
 // Logout user
 const logout = async () => {
     await axios.get(API_URL + 'logout')
+    localStorage.setItem('reloadAfterLogout', true)
     localStorage.removeItem('user')
+    localStorage.removeItem('hasRefreshed')
 }
 
 const authService = {
