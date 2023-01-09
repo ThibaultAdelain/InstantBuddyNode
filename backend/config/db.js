@@ -3,11 +3,11 @@ const colors = require('colors')
 
 const sequelize = new Sequelize(
     'INSTANT_BUDDY_DB',
-    'root',
-    'root1234',
+    'stevia',
+    'sthmvzHX',
     {
         host: 'localhost',
-        dialect: 'mysql'
+        dialect: 'postgres'
     }
 )
 
